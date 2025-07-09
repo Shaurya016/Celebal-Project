@@ -1,56 +1,4 @@
-# app.py
-import streamlit as st
-import joblib
-import numpy as np
-
-st.set_page_config(page_title="Credit Risk Predictor", layout="centered")
-
-st.title("🔍 Creditworthiness Prediction App")
-st.write("This app predicts whether a person is **creditworthy** or **not**, based on financial attributes.")
-
-# Load model
-model = joblib.load("random_forest_credit_model.joblib")
-
-# Input fields
-def user_input():
-    Status = st.selectbox("Status of checking account", [0, 1, 2, 3], key="status")
-    Duration = st.slider("Credit Duration (months)", 4, 72, 24, key="duration")
-    CreditHistory = st.selectbox("Credit History", [0, 1, 2, 3, 4], key="credithistory")
-    Purpose = st.selectbox("Purpose of credit", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], key="purpose")
-    CreditAmount = st.number_input("Credit Amount", 250, 20000, 5000, key="creditamount")
-    Savings = st.selectbox("Savings Account", [0, 1, 2, 3, 4], key="savings")
-    Employment = st.selectbox("Years of Employment", [0, 1, 2, 3, 4], key="employment")
-    InstallmentRate = st.slider("Installment Rate (% of income)", 1, 4, 2, key="installment_rate")
-    PersonalStatusSex = st.selectbox("Personal Status & Sex", [0, 1, 2, 3], key="personal_status")
-    OtherDebtors = st.selectbox("Other Debtors", [0, 1, 2], key="other_debtors")
-    ResidenceSince = st.slider("Years at Residence", 1, 4, 2, key="residence")
-    Property = st.selectbox("Property", [0, 1, 2, 3], key="property")
-    Age = st.slider("Age", 18, 75, 35, key="age")
-    OtherInstallmentPlans = st.selectbox("Other Installment Plans", [0, 1, 2], key="other_plans")
-    Housing = st.selectbox("Housing", [0, 1, 2], key="housing")
-    ExistingCredits = st.slider("Number of Existing Credits", 1, 4, 1, key="existing_credits")
-    Job = st.selectbox("Job", [0, 1, 2, 3], key="job")
-    NumPeopleMaintenance = st.selectbox("Dependents Maintained", [1, 2], key="dependents")
-    Telephone = st.selectbox("Telephone", [0, 1], key="telephone")
-    ForeignWorker = st.selectbox("Foreign Worker", [0, 1], key="foreign_worker")
-
-    data = np.array([[
-        Status, Duration, CreditHistory, Purpose, CreditAmount, Savings,
-        Employment, InstallmentRate, PersonalStatusSex, OtherDebtors,
-        ResidenceSince, Property, Age, OtherInstallmentPlans, Housing,
-        ExistingCredits, Job, NumPeopleMaintenance, Telephone, ForeignWorker
-    ]])
-    return data
-
-
-input_data = user_input()
-
-if st.button("Predict Creditworthiness"):
-    prediction = model.predict(input_data)
-    if prediction[0] == 1:
-        st.success("✅ Creditworthy: The applicant is likely to repay the loan.")
-    else:
-        st.error("❌ Not Creditworthy: The applicant is at risk of default.")
+ #app.py
 import streamlit as st
 import joblib
 import numpy as np
@@ -150,3 +98,6 @@ try:
     st.pyplot(fig2)
 except:
     st.info("Raw dataset not loaded. Class distribution plot skipped.")
+
+   
+       
