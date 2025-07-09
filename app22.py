@@ -13,26 +13,26 @@ model = joblib.load("random_forest_credit_model.joblib")
 
 # Input fields
 def user_input():
-    Status = st.selectbox("Status of existing checking account", [0, 1, 2, 3])
-    Duration = st.slider("Duration in months", 4, 72, 24)
-    CreditHistory = st.selectbox("Credit history", [0, 1, 2, 3, 4])
-    Purpose = st.selectbox("Purpose of credit", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-    CreditAmount = st.number_input("Credit Amount", 250, 20000, 5000)
-    Savings = st.selectbox("Savings account/bonds", [0, 1, 2, 3, 4])
-    Employment = st.selectbox("Employment", [0, 1, 2, 3, 4])
-    InstallmentRate = st.slider("Installment rate (% of income)", 1, 4, 2)
-    PersonalStatusSex = st.selectbox("Personal status and sex", [0, 1, 2, 3])
-    OtherDebtors = st.selectbox("Other debtors/guarantors", [0, 1, 2])
-    ResidenceSince = st.slider("Present residence since (years)", 1, 4, 2)
-    Property = st.selectbox("Property", [0, 1, 2, 3])
-    Age = st.slider("Age", 18, 75, 35)
-    OtherInstallmentPlans = st.selectbox("Other installment plans", [0, 1, 2])
-    Housing = st.selectbox("Housing", [0, 1, 2])
-    ExistingCredits = st.slider("Number of existing credits", 1, 4, 1)
-    Job = st.selectbox("Job", [0, 1, 2, 3])
-    NumPeopleMaintenance = st.selectbox("Number of people being maintained", [1, 2])
-    Telephone = st.selectbox("Telephone", [0, 1])
-    ForeignWorker = st.selectbox("Foreign Worker", [0, 1])
+    Status = st.selectbox("Status of checking account", [0, 1, 2, 3], key="status")
+    Duration = st.slider("Credit Duration (months)", 4, 72, 24, key="duration")
+    CreditHistory = st.selectbox("Credit History", [0, 1, 2, 3, 4], key="credithistory")
+    Purpose = st.selectbox("Purpose of credit", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], key="purpose")
+    CreditAmount = st.number_input("Credit Amount", 250, 20000, 5000, key="creditamount")
+    Savings = st.selectbox("Savings Account", [0, 1, 2, 3, 4], key="savings")
+    Employment = st.selectbox("Years of Employment", [0, 1, 2, 3, 4], key="employment")
+    InstallmentRate = st.slider("Installment Rate (% of income)", 1, 4, 2, key="installment_rate")
+    PersonalStatusSex = st.selectbox("Personal Status & Sex", [0, 1, 2, 3], key="personal_status")
+    OtherDebtors = st.selectbox("Other Debtors", [0, 1, 2], key="other_debtors")
+    ResidenceSince = st.slider("Years at Residence", 1, 4, 2, key="residence")
+    Property = st.selectbox("Property", [0, 1, 2, 3], key="property")
+    Age = st.slider("Age", 18, 75, 35, key="age")
+    OtherInstallmentPlans = st.selectbox("Other Installment Plans", [0, 1, 2], key="other_plans")
+    Housing = st.selectbox("Housing", [0, 1, 2], key="housing")
+    ExistingCredits = st.slider("Number of Existing Credits", 1, 4, 1, key="existing_credits")
+    Job = st.selectbox("Job", [0, 1, 2, 3], key="job")
+    NumPeopleMaintenance = st.selectbox("Dependents Maintained", [1, 2], key="dependents")
+    Telephone = st.selectbox("Telephone", [0, 1], key="telephone")
+    ForeignWorker = st.selectbox("Foreign Worker", [0, 1], key="foreign_worker")
 
     data = np.array([[
         Status, Duration, CreditHistory, Purpose, CreditAmount, Savings,
@@ -41,6 +41,7 @@ def user_input():
         ExistingCredits, Job, NumPeopleMaintenance, Telephone, ForeignWorker
     ]])
     return data
+
 
 input_data = user_input()
 
