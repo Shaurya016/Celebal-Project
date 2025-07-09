@@ -61,43 +61,45 @@ if st.button("🔮 Predict Creditworthiness"):
     st.metric("Confidence (Creditworthy)", f"{proba:.2%}")
 
 # ----- Plots -----
+# ----- Optional Visualizations -----
 st.markdown("---")
-st.header("📊 Model Insights")
+if st.checkbox("📊 Show Model Visualizations (Optional)"):
+    st.header("📊 Model Insights")
 
-# 1. Feature Importance
-st.subheader("🔎 Top 10 Feature Importances")
+    # 1. Feature Importance
+    st.subheader("🔎 Top 10 Feature Importances")
 
-features = [
-    "Status", "Duration", "CreditHistory", "Purpose", "CreditAmount",
-    "Savings", "Employment", "InstallmentRate", "PersonalStatusSex",
-    "OtherDebtors", "ResidenceSince", "Property", "Age",
-    "OtherInstallmentPlans", "Housing", "ExistingCredits",
-    "Job", "NumPeopleMaintenance", "Telephone", "ForeignWorker"
-]
+    features = [
+        "Status", "Duration", "CreditHistory", "Purpose", "CreditAmount",
+        "Savings", "Employment", "InstallmentRate", "PersonalStatusSex",
+        "OtherDebtors", "ResidenceSince", "Property", "Age",
+        "OtherInstallmentPlans", "Housing", "ExistingCredits",
+        "Job", "NumPeopleMaintenance", "Telephone", "ForeignWorker"
+    ]
 
-importances = model.feature_importances_
-fi_df = pd.DataFrame({
-    'Feature': features,
-    'Importance': importances
-}).sort_values("Importance", ascending=False).head(10)
+    importances = model.feature_importances_
+    fi_df = pd.DataFrame({
+        'Feature': features,
+        'Importance': importances
+    }).sort_values("Importance", ascending=False).head(10)
 
-fig1, ax1 = plt.subplots()
-sns.barplot(data=fi_df, x="Importance", y="Feature", palette="viridis", ax=ax1)
-st.pyplot(fig1)
+    fig1, ax1 = plt.subplots()
+    sns.barplot(data=fi_df, x="Importance", y="Feature", palette="viridis", ax=ax1)
+    st.pyplot(fig1)
 
-# 2. (Optional) Class Distribution (from raw data)
-try:
-    # If dataset is loaded
-    df = pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data",
-                     delimiter=' ', header=None)
-    df.columns = features + ["Target"]
-    st.subheader("📈 Original Dataset: Class Distribution")
-    fig2, ax2 = plt.subplots()
-    sns.countplot(data=df, x="Target", ax=ax2)
-    ax2.set_xticklabels(["Not Creditworthy (2)", "Creditworthy (1)"])
-    st.pyplot(fig2)
-except:
-    st.info("Raw dataset not loaded. Class distribution plot skipped.")
+    # 2. Class Distribution (Optional)
+    try:
+        df = pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data",
+                         delimiter=' ', header=None)
+        df.columns = features + ["Target"]
+        st.subheader("📈 Original Dataset: Class Distribution")
+        fig2, ax2 = plt.subplots()
+        sns.countplot(data=df, x="Target", ax=ax2)
+        ax2.set_xticklabels(["Not Creditworthy (2)", "Creditworthy (1)"])
+        st.pyplot(fig2)
+    except:
+        st.info("Class distribution plot skipped (dataset not loaded).")
+
 
    
        
